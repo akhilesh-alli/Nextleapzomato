@@ -1,4 +1,4 @@
-﻿# Phase-Wise Implementation Plan
+# Phase-Wise Implementation Plan
 ## AI-Powered Restaurant Recommendation System (Zomato Use Case)
 *Next Leap AI Project | Version 1.0*
 

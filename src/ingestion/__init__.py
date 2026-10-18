@@ -1,4 +1,4 @@
-﻿"""
+"""
 src/ingestion
 -------------
 Public API for Phase 1 — Data Ingestion & Preprocessing.

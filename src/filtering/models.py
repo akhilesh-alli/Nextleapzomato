@@ -1,4 +1,4 @@
-﻿"""
+"""
 src/filtering/models.py
 -----------------------
 Data models for the filtering layer.

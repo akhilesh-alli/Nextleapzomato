@@ -1,4 +1,4 @@
-﻿# Architecture Design
+# Architecture Design
 ## AI-Powered Restaurant Recommendation System (Zomato Use Case)
 
 ---

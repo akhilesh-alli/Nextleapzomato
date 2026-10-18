@@ -1,4 +1,4 @@
-﻿"""
+"""
 tests/test_ingestion.py
 -----------------------
 Unit tests for Phase 1: Data Ingestion & Normalization.

@@ -1,4 +1,4 @@
-﻿"""
+"""
 src/ingestion/normalizer.py
 ---------------------------
 Normalizes the raw Zomato dataset:

@@ -1,4 +1,4 @@
-﻿"""
+"""
 tests/test_filtering.py
 -----------------------
 Unit tests for Phase 2: Filtering Engine.

@@ -1,4 +1,4 @@
-﻿# Edge Cases & Corner Scenarios
+# Edge Cases & Corner Scenarios
 ## AI-Powered Restaurant Recommendation System (Zomato Use Case)
 *Next Leap AI Project | Version 1.0*
 

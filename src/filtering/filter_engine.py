@@ -1,4 +1,4 @@
-﻿"""
+"""
 src/filtering/filter_engine.py
 -------------------------------
 Rule-based restaurant filtering engine.
