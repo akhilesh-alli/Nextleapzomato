@@ -1,9 +1,14 @@
-# Railway Nixpacks Configuration
+providers = ["python"]
+
+[variables]
+PYTHON_VERSION = "3.11"
+
 [phases.setup]
-nixPkgs = ["python311"]
+nixPkgs = ["..."]
 
 [phases.install]
 cmds = ["pip install --upgrade pip", "pip install -r requirements-prod.txt"]
 
 [start]
 cmd = "uvicorn ui.server:app --host 0.0.0.0 --port $PORT"
+
