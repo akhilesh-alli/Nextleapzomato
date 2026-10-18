@@ -328,7 +328,8 @@ limiter = Limiter(key_func=get_remote_address)
 
 | Service            | URL                                           | Status |
 |--------------------|-----------------------------------------------|--------|
-| Web App & Backend  | https://nextleapzomato-production.up.railway.app |  Live  |
+| Frontend (Vercel)  | https://nextleapzomato-web.vercel.app         |  Live  |
+| Backend (Railway)  | https://nextleapzomato-production.up.railway.app |  Live  |
 | Health Check       | https://nextleapzomato-production.up.railway.app/api/health |  200 OK |
 | Recommend API      | POST https://nextleapzomato-production.up.railway.app/api/recommend |  Live  |
 
