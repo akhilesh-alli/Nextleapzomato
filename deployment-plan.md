@@ -326,12 +326,11 @@ limiter = Limiter(key_func=get_remote_address)
 
 ## Quick Reference
 
-| Service            | URL                                           |
-|--------------------|-----------------------------------------------|
-| Frontend (Vercel)  | https://zomato-concierge-ai.vercel.app        |
-| Backend (Railway)  | https://next-leap-ai-xxx.railway.app          |
-| Health Check       | https://next-leap-ai-xxx.railway.app/api/health |
-| Recommend API      | POST https://next-leap-ai-xxx.railway.app/api/recommend |
+| Service            | URL                                           | Status |
+|--------------------|-----------------------------------------------|--------|
+| Web App & Backend  | https://nextleapzomato-production.up.railway.app |  Live  |
+| Health Check       | https://nextleapzomato-production.up.railway.app/api/health |  200 OK |
+| Recommend API      | POST https://nextleapzomato-production.up.railway.app/api/recommend |  Live  |
 
 ---
 
