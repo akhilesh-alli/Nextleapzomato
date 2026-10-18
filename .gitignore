@@ -1,0 +1,37 @@
+# Environment & secrets
+.env
+*.env
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Data cache (large files)
+data/restaurants_raw.csv
+# data/restaurants_clean.csv  <- committed to repo so Railway can load the dataset (5.4 MB)
+
+# Pytest cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Streamlit cache
+.streamlit/

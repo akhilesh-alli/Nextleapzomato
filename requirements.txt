@@ -1,0 +1,27 @@
+﻿# Core data
+datasets>=2.19.0
+pandas>=2.0.0
+numpy>=1.26.0
+
+# LLM backends
+groq>=0.9.0
+openai>=1.30.0
+google-generativeai>=0.7.0
+
+# Config & environment
+python-dotenv>=1.0.0
+
+# CLI interface
+rich>=13.7.0
+
+# Web server (ASGI)
+starlette>=0.40.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
+
+# Streamlit UI (local dev only -- excluded in requirements-prod.txt)
+streamlit>=1.35.0
+
+# Testing
+pytest>=8.0.0
+pytest-mock>=3.14.0

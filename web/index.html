@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="AI-Powered Restaurant Concierge & Discovery Engine combining real Zomato data with state-of-the-art LLM reasoning."/>
+  <title>Zomato Concierge AI — Obsidian Gourmet Concierge</title>
+
+  <!-- Preconnect & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+  <!-- =========================================================================
+       Global Top Navigation Bar
+       ========================================================================= -->
+  <header class="app-header">
+    <!-- Brand / Logo -->
+    <div class="brand-wrapper">
+      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VdxKWaYYK37aCdfCBKXHq8X8-zFFOwV9_WBTScvm-szF627bqDSjvD-i_c7B4u9gqMAetJyV27_XdRJc4M7xz0qzbcC7ZvFToFpJlEZcFow9MSY99V_zzfcGhWLVN-5iNMlotekwwoBaNgpU8lxLJMILm8A3gv0spM5WM0yqEgb--u5ZFIrIQBvFFqKGhDdqzs5UJicSeYQzksVZ4-Q39Vh4IlxFKZSS4QkFbuP9rPb82rqSmnspePfrc" alt="Zomato Concierge Logo" class="brand-logo-img"/>
+      <h1 class="brand-title">Zomato Concierge <span class="brand-ai">AI</span></h1>
+      <span class="beta-badge">BETA</span>
+    </div>
+
+    <!-- Telemetry Status Pill -->
+    <div class="header-telemetry-pill" style="display: none;">
+      <!-- Hidden on mobile, shown on desktop via CSS or flex -->
+    </div>
+    <div class="header-telemetry-pill" id="headerTelemetryPill">
+      <span class="pulse-dot"></span>
+      <span>AI Model: <strong style="color:var(--text-primary);" id="activeModelLabel">Groq LLaMA 3.3 70B</strong></span>
+      <span style="opacity:0.3;">|</span>
+      <span>Active Dataset: <span style="color:var(--secondary);">Bangalore & Metro Hubs</span></span>
+    </div>
+
+    <!-- Navigation Views & Controls -->
+    <div class="header-actions">
+      <nav class="header-nav" aria-label="Main Navigation">
+        <a href="#explore" class="nav-link active" data-path="explore-feed">Explore</a>
+        <a href="#concierge" class="nav-link" data-path="concierge-planner">Concierge</a>
+        <a href="#taste-graph" class="nav-link" data-path="taste-graph">Taste Graph</a>
+      </nav>
+
+      <button class="header-btn" id="headerLocationBtn" type="button" title="Current Location">
+        <span class="material-symbols-outlined text-secondary" style="font-size:18px;">location_on</span>
+        <span id="headerLocationText">Koramangala, Bangalore</span>
+        <span class="material-symbols-outlined text-muted" style="font-size:16px;">expand_more</span>
+      </button>
+
+      <button class="bookmark-btn" id="headerBookmarkBtn" type="button" aria-label="View Saved Bookmarks" title="Saved Dining Spots">
+        <span class="material-symbols-outlined" style="font-size:20px;">bookmark</span>
+        <span class="bookmark-badge" id="bookmarkCount">1</span>
+      </button>
+
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfFxCFzYP4kkYUkFHJLJ4ZjXLb297mVwcp9rCoggFK-eA6_VGmrRqzTjHffr2lx38lVt8-Let7GvLNIpYdsQDOOqWYAZDPINy3WCM8fIdhOQE8Wn70eGCx4KsOYj9Zujq76Rgwp8NyqXyxN4ztiLykdXODOuFvSaZ_m4cMOkticpCNQcMJVsagKjT_fhPqVQ73VYN03VBz5B3v3nrqnJ46aP89ORKhdfgkz4zp9OeImsk1NigE44YM" alt="Diner Profile Avatar" class="profile-avatar"/>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       Main Content Container
+       ========================================================================= -->
+  <main class="app-main">
+
+    <!-- VIEW 1: EXPLORE DASHBOARD (Primary 2-Column Experience) -->
+    <section class="view-section active" id="explore-feed">
+      <div class="dashboard-grid">
+
+        <!-- LEFT SIDEBAR: PREFERENCE CONTROL CENTER -->
+        <aside class="control-sidebar" aria-label="Dining Discovery Controls">
+          <!-- Ambient glowing gradients -->
+          <div class="glow-blob-1"></div>
+          <div class="glow-blob-2"></div>
+
+          <!-- Section Header -->
+          <div class="sidebar-header">
+            <div class="sidebar-title-badge">
+              <span class="pulse-dot pulse-cyan"></span>
+              <span>Discovery Controls</span>
+            </div>
+            <span class="sidebar-subtitle">Generative Weights</span>
+          </div>
+
+          <!-- 1. Location Autocomplete + Quick Pills -->
+          <div class="form-group">
+            <div class="form-label-row">
+              <label class="form-label" for="locationInput">
+                <span>Primary Location Hub</span>
+              </label>
+              <span class="status-badge">
+                <span class="material-symbols-outlined filled" style="font-size:14px;">my_location</span> GPS Synced
+              </span>
+            </div>
+            <div class="input-icon-wrapper">
+              <span class="material-symbols-outlined input-leading-icon">search</span>
+              <input type="text" id="locationInput" class="text-input" value="Koramangala, Bangalore" placeholder="Search neighborhood or city..."/>
+              <span class="material-symbols-outlined input-trailing-icon" title="Filter tuning">tune</span>
+            </div>
+            <!-- Quick Location Pills -->
+            <div class="pill-group">
+              <button type="button" class="quick-pill active" data-loc="Koramangala, Bangalore">
+                <span class="material-symbols-outlined" style="font-size:12px;">check</span> Koramangala
+              </button>
+              <button type="button" class="quick-pill" data-loc="Indiranagar, Bangalore">Indiranagar</button>
+              <button type="button" class="quick-pill" data-loc="Whitefield, Bangalore">Whitefield</button>
+              <button type="button" class="quick-pill" data-loc="Lavelle Road, Bangalore">Lavelle Road</button>
+              <button type="button" class="quick-pill" data-loc="HSR Layout, Bangalore">HSR Layout</button>
+            </div>
+          </div>
+
+          <!-- 2. Cuisines & Dining Style -->
+          <div class="form-group">
+            <div class="form-label-row">
+              <label class="form-label">Cuisines & Dining Style</label>
+              <span class="label-action" id="resetCuisinesBtn">Reset Selection</span>
+            </div>
+            <div class="pill-group" id="cuisineTagsGroup">
+              <span class="tag-pill active" data-cuisine="Italian">
+                <span class="material-symbols-outlined filled" style="font-size:12px;">check</span> Italian
+              </span>
+              <span class="tag-pill active" data-cuisine="Wood-fired Pizza">
+                <span class="material-symbols-outlined filled" style="font-size:12px;">check</span> Wood-fired Pizza
+              </span>
+              <span class="tag-pill" data-cuisine="North Indian">North Indian</span>
+              <span class="tag-pill" data-cuisine="Biryani">Biryani</span>
+              <span class="tag-pill" data-cuisine="Artisanal Cafe">Artisanal Cafe</span>
+              <span class="tag-pill" data-cuisine="Pan-Asian">Pan-Asian</span>
+              <span class="tag-pill" data-cuisine="Cocktail Bar">Cocktail Bar</span>
+              <span class="tag-pill" data-cuisine="Continental">Continental</span>
+            </div>
+          </div>
+
+          <!-- 3. Budget Tier Segmented Switcher -->
+          <div class="form-group">
+            <label class="form-label">Budget Tier (For Two)</label>
+            <div class="segmented-control" role="group" aria-label="Budget Tier Switcher">
+              <button type="button" class="segment-btn" data-budget="low">&lt; ₹800</button>
+              <button type="button" class="segment-btn active" data-budget="medium">₹800–1.8k</button>
+              <button type="button" class="segment-btn" data-budget="high">₹1,800+</button>
+            </div>
+          </div>
+
+          <!-- 4. Minimum Rating Slider -->
+          <div class="form-group">
+            <div class="form-label-row">
+              <label class="form-label" for="ratingSlider">Minimum Food & Ambience Rating</label>
+              <span class="rating-badge-pill" id="ratingValDisplay">
+                4.0 <span class="material-symbols-outlined filled" style="font-size:12px;">star</span>
+              </span>
+            </div>
+            <div class="rating-slider-box">
+              <div class="slider-track-wrap">
+                <input type="range" id="ratingSlider" class="custom-range-slider" min="3.0" max="5.0" step="0.1" value="4.0"/>
+              </div>
+              <div class="slider-scale-labels">
+                <span>3.0</span>
+                <span>3.5</span>
+                <span style="color:var(--tertiary); font-weight:600;">4.0</span>
+                <span>4.5</span>
+                <span>5.0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Service Features Toggles -->
+          <div class="form-group" style="gap: 8px;">
+            <div class="feature-toggle-card">
+              <div class="toggle-info">
+                <span class="material-symbols-outlined text-secondary" style="font-size:22px;">moped</span>
+                <span>Online Delivery Ready</span>
+              </div>
+              <div class="toggle-switch active" id="toggleDelivery" role="switch" aria-checked="true" tabindex="0">
+                <div class="toggle-dot"></div>
+              </div>
+            </div>
+
+            <div class="feature-toggle-card">
+              <div class="toggle-info">
+                <span class="material-symbols-outlined text-tertiary" style="font-size:22px;">table_restaurant</span>
+                <span>Guaranteed Reservation</span>
+              </div>
+              <div class="toggle-switch active toggle-tertiary" id="toggleBooking" role="switch" aria-checked="true" tabindex="0">
+                <div class="toggle-dot"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. AI Vibe & Sensory Prompt -->
+          <div class="form-group">
+            <div class="form-label-row">
+              <label class="form-label" style="color:var(--secondary);">
+                <span class="material-symbols-outlined" style="font-size:16px;">auto_awesome</span>
+                AI Vibe & Sensory Prompt
+              </label>
+              <span class="sidebar-subtitle">Semantic v2</span>
+            </div>
+            <div class="ai-prompt-container">
+              <textarea id="vibeTextarea" class="ai-textarea" rows="3" placeholder="Describe the evening vibe, specific cravings, light decibel level...">Cozy romantic dinner with outdoor candle-lit seating, craft wine pairing, and live acoustic music. Not too noisy.</textarea>
+            </div>
+            <div class="pill-group" style="padding-top: 4px;">
+              <span class="vibe-chip" data-vibe="✨ Candlelight">✨ Candlelight</span>
+              <span class="vibe-chip" data-vibe="🌿 Lush Garden">🌿 Lush Garden</span>
+              <span class="vibe-chip" data-vibe="🍷 Natural Wine">🍷 Natural Wine</span>
+              <span class="vibe-chip" data-vibe="🔇 Low Decibel">🔇 Low Decibel</span>
+              <span class="vibe-chip" data-vibe="🌃 Rooftop Deck">🌃 Rooftop Deck</span>
+            </div>
+          </div>
+
+          <!-- Primary CTA Button -->
+          <button type="button" class="primary-cta-btn" id="discoverBtn">
+            <span class="material-symbols-outlined" style="font-size:20px;">magic_button</span>
+            <span>Discover Curated Dining</span>
+          </button>
+        </aside>
+
+        <!-- RIGHT MAIN CANVAS -->
+        <div class="main-content">
+
+          <!-- 1. Dynamic Search Summary Pill -->
+          <div class="summary-strip-card" id="searchSummaryPill">
+            <div class="summary-strip-left">
+              <span class="material-symbols-outlined text-secondary filled" style="font-size:20px;">bubble_chart</span>
+              <span id="summaryText">Showing <strong class="highlight-cyan">5 AI-curated spots</strong> for Koramangala • Mid-Tier (₹800–₹1.8k) • Italian & Wine • Rating ≥ 4.0</span>
+            </div>
+            <div class="summary-strip-right">
+              <span class="pulse-dot"></span>
+              <span id="summaryTimestamp">Updated 38s ago</span>
+            </div>
+          </div>
+
+          <!-- 2. Filter Relaxation Banner (shown when auto-adjusted) -->
+          <div class="relaxation-banner" id="relaxationBanner" style="display: flex;">
+            <div class="relaxation-banner-content">
+              <span class="material-symbols-outlined text-secondary" style="font-size:20px;">tune</span>
+              <span id="relaxationText">
+                <strong>Auto-relaxed:</strong> Radius dynamically expanded by <strong>+2.1 km</strong> to surface exceptional garden patio venues meeting your acoustic requirements.
+              </span>
+            </div>
+          </div>
+
+          <!-- 3. Chef AI Synthesis Report / Executive Summary Card -->
+          <article class="synthesis-card" id="synthesisCard">
+            <div class="synthesis-glow-flair"></div>
+            <div class="synthesis-header">
+              <div class="synthesis-title-group">
+                <div class="synthesis-avatar-box">
+                  <span class="material-symbols-outlined" style="font-size:22px;">psychology</span>
+                </div>
+                <div>
+                  <h3 class="synthesis-card-title">Chef AI Synthesis Report</h3>
+                  <p class="synthesis-card-subtitle">Multi-Dimensional Vibe Reranker</p>
+                </div>
+              </div>
+              <div class="synthesis-meta-chips">
+                <span class="synthesis-meta-pill" id="synthesisSubtext">Analyzed 48 listings • Koramangala Sector 3-6</span>
+                <span class="synthesis-meta-pill badge-tertiary">Just now</span>
+              </div>
+            </div>
+
+            <p class="synthesis-paragraph" id="synthesisParagraph">
+              Based on your prompt for an <span class="highlight">intimate, low-noise outdoor Italian dinner</span> with sommelier wine selections, we filtered down candidates prioritizing secluded bougainvillea courtyards, verified ambient sound meters below <span style="color:var(--secondary); font-weight:600;">62 dB</span>, and handmade pasta stations.
+            </p>
+
+            <!-- 4 Metrics Tray -->
+            <div class="synthesis-metrics-grid">
+              <div class="metric-cell">
+                <span class="metric-label">Semantic Match</span>
+                <span class="metric-value cyan" id="metricSemantic">98.4%</span>
+              </div>
+              <div class="metric-cell">
+                <span class="metric-label">Acoustic Score</span>
+                <span class="metric-value emerald" id="metricAcoustic">&lt; 58 dB <span style="font-size:11px; font-weight:normal; color:var(--text-muted);">(Soft)</span></span>
+              </div>
+              <div class="metric-cell">
+                <span class="metric-label">Patio Confidence</span>
+                <span class="metric-value crimson" id="metricConfidence">High (Covered)</span>
+              </div>
+              <div class="metric-cell">
+                <span class="metric-label">Avg Wait Time</span>
+                <span class="metric-value" id="metricWaitTime">Zero Wait</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4. Skeleton Preview Loading Card (Active during query) -->
+          <div class="skeleton-eval-card" id="skeletonCard" style="display: none;">
+            <div class="skeleton-header">
+              <span class="skeleton-pulse-text">
+                <span class="pulse-dot pulse-cyan"></span>
+                <span>Evaluating candidate dining venues with neural reranker...</span>
+              </span>
+              <span style="font-family:var(--font-data); font-size:11px; color:var(--text-muted);">Running cosine similarity</span>
+            </div>
+            <div class="skeleton-shimmer-bar" style="width: 70%;"></div>
+            <div class="skeleton-shimmer-bar" style="width: 50%;"></div>
+            <div class="skeleton-shimmer-bar" style="height: 60px; border-radius: 8px;"></div>
+          </div>
+
+          <!-- 5. Ranked Restaurant Recommendation Feed -->
+          <div class="feed-container" id="feedContainer">
+            <!-- Dynamically populated by app.js with Rank #1 Hero + secondary cards -->
+          </div>
+
+          <!-- 6. Pipeline Telemetry Footnote -->
+          <div class="telemetry-footer-strip" id="telemetryStrip">
+            <div style="display:flex; align-items:center; gap: 8px;">
+              <span style="color:var(--tertiary);">•</span>
+              <span id="telemetryCounts">Retrieved 48 candidates from Vector Index · Filtered to 5 through Multi-Factor Reranker</span>
+            </div>
+            <div style="display:flex; align-items:center; gap: 16px;">
+              <span>LLM Reasoning Latency: <strong id="telemetryLatency">420ms</strong></span>
+              <span>Model: <span style="color:var(--text-primary);" id="telemetryModel">Groq LLaMA 3.3 70B</span></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: CONCIERGE PLANNER (Conversational Assistant) -->
+    <section class="view-section" id="concierge-planner">
+      <div class="concierge-chat-wrap">
+        <div class="synthesis-card" style="padding: 1.5rem;">
+          <h2 style="font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--text-primary); margin-bottom:0.25rem;">Concierge AI Dining Assistant</h2>
+          <p style="color:var(--text-muted); font-size:13px;">Ask anything about Bangalore's food scene, specific table vibes, private dining reservations, or wine pairings.</p>
+        </div>
+
+        <div class="chat-bubble-container" id="chatContainer">
+          <div class="chat-bubble bot">
+            Hello! I am your Obsidian Culinary Concierge. How can I tailor your evening? Whether you're planning an anniversary dinner in Koramangala, looking for artisanal cold brews in Indiranagar, or hunting for late-night wood-fired pizzas, I'm here to curate.
+          </div>
+          <div class="chat-bubble user">
+            Can you recommend a quiet spot with outdoor seating in Koramangala for two people under ₹1,500?
+          </div>
+          <div class="chat-bubble bot">
+            I strongly recommend <strong>Chianti Artisanal Ristorante</strong> in 5th Block Koramangala. It features a private bougainvillea patio with candlelit tables, soft acoustic levels (under 54 dB), and their handmade truffle ravioli and wine pairings fit perfectly within your ₹1,400 budget. Would you like me to hold a table for 8:00 PM tonight?
+          </div>
+        </div>
+
+        <div class="input-icon-wrapper" style="margin-top: 1rem;">
+          <input type="text" class="text-input" placeholder="Type a dining question or request..." style="padding-left: 18px; padding-right: 50px;"/>
+          <button type="button" class="primary-cta-btn" style="position: absolute; right: 4px; width: auto; margin: 0; padding: 7px 16px;">Send</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: TASTE GRAPH (Sensory Profiler) -->
+    <section class="view-section" id="taste-graph">
+      <div class="taste-graph-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h2 style="font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--text-primary);">Algorithmic Taste Graph</h2>
+            <p style="color:var(--text-muted); font-size:13px;">Multi-attribute sensory mapping of current recommendations.</p>
+          </div>
+          <span class="beta-badge">NEURAL PROFILE v2.4</span>
+        </div>
+
+        <div class="taste-radar-grid">
+          <div class="taste-meter-card">
+            <span style="font-size:11px; text-transform:uppercase; color:var(--secondary); font-weight:700;">Acoustic Comfort</span>
+            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <span style="font-size:1.5rem; font-weight:800; color:var(--tertiary);">94/100</span>
+              <span style="font-size:12px; color:var(--text-muted);">Quiet / Conversational</span>
+            </div>
+            <div style="height:6px; background:var(--surface-container-highest); border-radius:99px; overflow:hidden;">
+              <div style="width:94%; height:100%; background:var(--tertiary);"></div>
+            </div>
+          </div>
+
+          <div class="taste-meter-card">
+            <span style="font-size:11px; text-transform:uppercase; color:var(--secondary); font-weight:700;">Ambience & Lighting</span>
+            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <span style="font-size:1.5rem; font-weight:800; color:var(--primary);">98/100</span>
+              <span style="font-size:12px; color:var(--text-muted);">Intimate Candlelight</span>
+            </div>
+            <div style="height:6px; background:var(--surface-container-highest); border-radius:99px; overflow:hidden;">
+              <div style="width:98%; height:100%; background:var(--primary-container);"></div>
+            </div>
+          </div>
+
+          <div class="taste-meter-card">
+            <span style="font-size:11px; text-transform:uppercase; color:var(--secondary); font-weight:700;">Culinary Authenticity</span>
+            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <span style="font-size:1.5rem; font-weight:800; color:var(--secondary);">96/100</span>
+              <span style="font-size:12px; color:var(--text-muted);">Artisanal Handmade</span>
+            </div>
+            <div style="height:6px; background:var(--surface-container-highest); border-radius:99px; overflow:hidden;">
+              <div style="width:96%; height:100%; background:var(--secondary);"></div>
+            </div>
+          </div>
+
+          <div class="taste-meter-card">
+            <span style="font-size:11px; text-transform:uppercase; color:var(--secondary); font-weight:700;">Value-to-Experience Ratio</span>
+            <div style="display:flex; justify-content:space-between; align-items:baseline;">
+              <span style="font-size:1.5rem; font-weight:800; color:var(--warning);">91/100</span>
+              <span style="font-size:12px; color:var(--text-muted);">Optimal Mid-Tier</span>
+            </div>
+            <div style="height:6px; background:var(--surface-container-highest); border-radius:99px; overflow:hidden;">
+              <div style="width:91%; height:100%; background:var(--warning);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       Instant Table Booking Modal Dialog
+       ========================================================================= -->
+  <div class="modal-backdrop" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalBookingTitle">
+    <div class="modal-panel">
+      <span class="material-symbols-outlined modal-close-btn" id="modalCloseBtn" title="Close dialog">close</span>
+      <div style="display:flex; align-items:center; gap: 8px;">
+        <span class="material-symbols-outlined text-primary" style="font-size:24px;">table_restaurant</span>
+        <h3 id="modalBookingTitle" style="font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--text-primary);">Instant Table Reservation</h3>
+      </div>
+      <p style="color:var(--text-muted); font-size:13px; margin-top:-8px;">
+        Reserving at <strong id="modalRestaurantName" style="color:var(--secondary);">Chianti Artisanal Ristorante</strong>
+      </p>
+
+      <form id="bookingForm" style="display:flex; flex-direction:column; gap:12px;">
+        <div class="form-group">
+          <label class="form-label">Party Size</label>
+          <div class="pill-group">
+            <button type="button" class="quick-pill active">2 Guests</button>
+            <button type="button" class="quick-pill">4 Guests</button>
+            <button type="button" class="quick-pill">6 Guests</button>
+            <button type="button" class="quick-pill">8+ Guests</button>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input type="date" class="text-input" style="padding: 8px 12px;" value="2026-10-18"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Time Slot</label>
+            <select class="text-input" style="padding: 8px 12px; background:var(--surface-container-highest);">
+              <option>7:30 PM</option>
+              <option selected>8:00 PM (Popular)</option>
+              <option>8:30 PM</option>
+              <option>9:00 PM</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Seating Preference</label>
+          <div class="pill-group">
+            <button type="button" class="quick-pill active">🌿 Candlelit Courtyard</button>
+            <button type="button" class="quick-pill">❄️ Indoor AC Dining</button>
+            <button type="button" class="quick-pill">🍷 Wine Cellar Alcove</button>
+          </div>
+        </div>
+
+        <button type="submit" class="primary-cta-btn" style="margin-top: 10px;">
+          <span class="material-symbols-outlined" style="font-size:18px;">check</span> Confirm Instant Reservation
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       Saved Bookmarks Modal Dialog
+       ========================================================================= -->
+  <div class="modal-backdrop" id="bookmarksModal" role="dialog" aria-modal="true">
+    <div class="modal-panel" style="max-width: 580px;">
+      <span class="material-symbols-outlined modal-close-btn" id="bookmarksModalCloseBtn" title="Close">close</span>
+      <div style="display:flex; align-items:center; gap: 8px;">
+        <span class="material-symbols-outlined text-primary" style="font-size:24px;">favorite</span>
+        <h3 style="font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--text-primary);">Saved Dining Bookmarks</h3>
+      </div>
+      <div id="bookmarksList" style="max-height: 360px; overflow-y:auto; margin-top: 8px;">
+        <!-- Dynamically rendered -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- =========================================================================
+       App Footer
+       ========================================================================= -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <span style="color:var(--secondary); font-weight:600;">Zomato Concierge Engine</span>
+        <span>•</span>
+        <span>Next-Gen Dining Telemetry &copy; 2026</span>
+      </div>
+      <div class="footer-right">
+        <span style="display:inline-flex; align-items:center; gap:4px; color:var(--tertiary);">
+          <span class="material-symbols-outlined" style="font-size:16px;">bolt</span> Neural Nodes Healthy
+        </span>
+        <a href="#explore">Explore</a>
+        <a href="#concierge">Concierge</a>
+        <a href="#taste-graph">Taste Graph</a>
+        <a href="/api/health" target="_blank" id="footerApiHealthLink">API Health</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Core Application Scripts -->
+  <!-- PRODUCTION: Set CONCIERGE_API_BASE to your Railway backend URL.
+       Example: window.CONCIERGE_API_BASE = 'https://your-app-name.railway.app';
+       Leave empty ('') for local development (same-origin). -->
+  <script>
+    window.CONCIERGE_API_BASE = '';
+  </script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

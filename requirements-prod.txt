@@ -1,0 +1,17 @@
+﻿# Core data
+datasets>=2.19.0
+pandas>=2.0.0
+numpy>=1.26.0
+
+# LLM backends
+groq>=0.9.0
+openai>=1.30.0
+google-generativeai>=0.7.0
+
+# Config & environment
+python-dotenv>=1.0.0
+
+# Web server
+starlette>=0.40.0
+uvicorn[standard]>=0.30.0
+python-multipart>=0.0.9
